@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/copier"
 )
 
 func GetFlats(c *gin.Context) {
@@ -45,7 +46,7 @@ func GetFlat(c *gin.Context) {
 	c.JSON(http.StatusOK, flat)
 }
 
-type FlatInput struct {
+type SaveFlatInput struct {
 	Name    string `json:"name" binding:"required"`
 	Address string `json:"address" binding:"required"`
 	Floor   uint   `json:"floor" binding:"required"`
@@ -60,7 +61,7 @@ func SaveFlat(c *gin.Context) {
 		return
 	}
 
-	var input FlatInput
+	var input SaveFlatInput
 
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -69,9 +70,7 @@ func SaveFlat(c *gin.Context) {
 
 	newFlat := models.Flat{}
 
-	newFlat.Name = input.Name
-	newFlat.Address = input.Address
-	newFlat.Floor = input.Floor
+	copier.Copy(&newFlat, &input)
 	newFlat.UserID = userId
 
 	if err := models.DB.Create(&newFlat).Error; err != nil {

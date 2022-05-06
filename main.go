@@ -40,6 +40,13 @@ func main() {
 		private.POST("/flat", controllers.SaveFlat)
 		private.PUT("/flat/:id", controllers.UpdateFlat)
 		private.DELETE("/flat/:id", controllers.DeleteFlat)
+
+		// Lessee API
+		private.GET("/lessee", controllers.GetLessees)
+		private.GET("/lessee/:id", controllers.GetLessee)
+		private.POST("/lessee", controllers.SaveLessee)
+		private.PUT("/lessee/:id", controllers.UpdateLessee)
+		private.DELETE("/lessee/:id", controllers.DeleteLessee)
 	}
 
 	if err := r.Run(fmt.Sprintf(":%s", os.Getenv("PORT"))); err != nil {
