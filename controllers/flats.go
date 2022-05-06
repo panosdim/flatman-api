@@ -39,7 +39,7 @@ func GetFlat(c *gin.Context) {
 	var flat models.Flat
 
 	if err := models.DB.Where("user_id = ?", userId).Find(&flat, id).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusForbidden, gin.H{"error": "You can only view your own flats."})
 		return
 	}
 
@@ -108,7 +108,7 @@ func UpdateFlat(c *gin.Context) {
 	var flat models.Flat
 
 	if err := models.DB.Where("user_id = ?", userId).Find(&flat, id).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusForbidden, gin.H{"error": "You can only update your own flats."})
 		return
 	}
 
@@ -139,7 +139,7 @@ func DeleteFlat(c *gin.Context) {
 	}
 
 	if flat.UserID != userId {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "you can only delete your own flats"})
+		c.JSON(http.StatusForbidden, gin.H{"error": "you can only delete your own flats"})
 		return
 	}
 

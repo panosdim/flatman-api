@@ -83,7 +83,7 @@ func SaveLessee(c *gin.Context) {
 
 	// Check if currently authenticated user is the owner of flat
 	if err := models.DB.Where("user_id = ?", userId).Find(&models.Flat{}, input.FlatID).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "You can only add lessees to your own flats."})
+		c.JSON(http.StatusForbidden, gin.H{"error": "You can only add lessees to your own flats."})
 		return
 	}
 
@@ -95,7 +95,7 @@ func SaveLessee(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusCreated, input)
+	c.JSON(http.StatusCreated, newLessee)
 }
 
 type UpdateLesseeInput struct {
@@ -136,14 +136,14 @@ func UpdateLessee(c *gin.Context) {
 
 	// Check if currently authenticated user is the owner of the lessee
 	if err := models.DB.Where("user_id = ?", userId).Find(&models.Flat{}, lessee.FlatID).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "You can only update lessees of your own flats."})
+		c.JSON(http.StatusForbidden, gin.H{"error": "You can only update lessees of your own flats."})
 		return
 	}
 
 	// Check if currently authenticated user is the owner of flat if it tries to update the flat_id
 	if input.FlatID != 0 {
 		if err := models.DB.Where("user_id = ?", userId).Find(&models.Flat{}, input.FlatID).Error; err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "You can only assign lessees to your own flats."})
+			c.JSON(http.StatusForbidden, gin.H{"error": "You can only assign lessees to your own flats."})
 			return
 		}
 	}
@@ -176,7 +176,7 @@ func DeleteLessee(c *gin.Context) {
 
 	// Check if currently authenticated user is the owner of the lessee
 	if err := models.DB.Where("user_id = ?", userId).Find(&models.Flat{}, lessee.FlatID).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "You can only delete lessees from your own flats."})
+		c.JSON(http.StatusForbidden, gin.H{"error": "You can only delete lessees from your own flats."})
 		return
 	}
 
