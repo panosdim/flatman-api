@@ -2,7 +2,7 @@ package models
 
 type Lessee struct {
 	ID         uint    `gorm:"primary_key;autoIncrement" json:"id"`
-	FlatID     uint    `json:"flat_id"`
+	FlatID     uint    `gorm:"not null" json:"flat_id"`
 	Name       string  `gorm:"size:255;not null;unique" json:"name"`
 	Address    string  `gorm:"not null" json:"address"`
 	PostalCode string  `gorm:"size:5;not null" json:"postal_code"`

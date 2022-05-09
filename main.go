@@ -47,6 +47,13 @@ func main() {
 		private.POST("/lessee", controllers.SaveLessee)
 		private.PUT("/lessee/:id", controllers.UpdateLessee)
 		private.DELETE("/lessee/:id", controllers.DeleteLessee)
+
+		// Balance API
+		private.GET("/balance", controllers.GetBalances)
+		private.GET("/balance/:id", controllers.GetBalance)
+		private.POST("/balance", controllers.SaveBalance)
+		private.PUT("/balance/:id", controllers.UpdateBalance)
+		private.DELETE("/balance/:id", controllers.DeleteBalance)
 	}
 
 	if err := r.Run(fmt.Sprintf(":%s", os.Getenv("PORT"))); err != nil {
