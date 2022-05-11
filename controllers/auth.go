@@ -65,6 +65,6 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": jwt})
+	c.JSON(http.StatusOK, gin.H{"token": jwt, "user": map[string]string{"firstName": u.FirstName, "lastName": u.LastName}})
 
 }
