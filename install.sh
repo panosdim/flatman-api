@@ -10,7 +10,6 @@ is_service_exists() {
     else
         return 1
     fi
-    unset x
 }
 
 INSTALL_PATH=/opt/flatman
@@ -41,6 +40,8 @@ if [ -f .env ] && [ -f $EXEC_NAME ] && [ -f $SERVICE_NAME ]; then
         cp $SERVICE_NAME /usr/lib/systemd/system
         systemctl start $SERVICE_NAME
         systemctl enable $SERVICE_NAME
+	cp flatman.conf $NGINX_CONF_PATH
+        nginx -s reload
     fi
 else
     echo "Not all needed files found. Installation failed."
