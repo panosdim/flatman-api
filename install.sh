@@ -15,6 +15,7 @@ is_service_exists() {
 INSTALL_PATH=/opt/flatman
 EXEC_NAME=flatman
 SERVICE_NAME=$EXEC_NAME.service
+NGINX_CONF_PATH=/etc/nginx/conf.d
 
 # Build software
 
