@@ -40,7 +40,7 @@ if [ -f .env ] && [ -f $EXEC_NAME ] && [ -f $SERVICE_NAME ]; then
         cp $SERVICE_NAME /usr/lib/systemd/system
         systemctl start $SERVICE_NAME
         systemctl enable $SERVICE_NAME
-	cp flatman.conf $NGINX_CONF_PATH
+        cp flatman.conf $NGINX_CONF_PATH
         nginx -s reload
     fi
 else
